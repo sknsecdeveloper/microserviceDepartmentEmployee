@@ -1,0 +1,765 @@
+rest vs sop
+REST (stateless)
+
+spring mvc --> dispacher servlet(front controller) -> 
+
+@Controller vs @RestController(@Controller + @ResponseBody)
+
+(@Controller + @ResponseBody) vs @Controller
+
+
+@SpringbootApplication(@ComponentScan + @AutoConfiguration + @Configuration)
+
+
+Compare Spring mvc Springboot
+
+---- 
+management.info.env.enabled=true
+management.info.build.enabled=true
+management.info.git.enabled=true
+management.info.java.enabled=true
+management.info.os.enabled=true
+
+
+@Pathvariable(404) vs @RequestParam(400)
+
+@Value({"$"})
+
+
+@PropertySource(classpath: )
+
+
+@ConfigurationProperty
+
+{
+name
+id
+}
+
+@Profile - needs hand on
+
+@Resource- like @Autowired but limited on setter with single argument 
+@Scope singleton, prototype, request, session, application
+
+
+@Lazy --- with @Configuration or @Component.  it indicates that all the methods with @Bean annotation should be loaded lazily.
+
+complete lazy -> 
+@Componen
+@Lazy
+
+@Autowired
+@Lazy
+
+Caching
+==========
+
+@Configuration
+@EnableCaching
+public class CacheConfig {
+  ...
+}
+
+@Caching(evict = {
+    @CacheEvict(cacheNames = "departments", allEntries = true), 
+    @CacheEvict(cacheNames = "employees", key = "...")})
+public boolean importEmployees(List<Employee> data) { ... } 
+
+
+@Cacheable(value = "userProfiles", key = "#userId")
+    public UserProfile getUserProfile(String userId) {
+        // This method fetches the user profile from the database
+        return userProfileRepository.getUserProfile(userId);
+    }
+
+    @CacheEvict(value = "userProfiles", key = "#userId")
+    public void updateUserProfile(String userId, UserProfile updatedProfile) {
+        // This method updates the user profile in the database
+        userProfileRepository.updateUserProfile(userId, updatedProfile);
+    }
+
+
+@CacheConfig(cacheNames={"employees"})
+public class EmployeeService { ------------- provide value and cache name for method insie a class
+
+1,1,1,2,2,3,2
+
+key 1 value [1,1,1]
+
+2 [2,2,2]
+
+GROUPNGBY
+
+Map<Integer, List<Integer>> listMapTest =Arrays.stream(arr).mapToObj(n -> (Integer.valueOf(n))).
+                collect(Collectors.groupingBy(c->c));
+
+Map<Integer, Long> integerIntegerMap = Arrays.stream(arr).mapToObj(c-> Integer.valueOf(c)).collect(Collectors.
+                groupingBy(c->c, Collectors.counting()));
+
+ Arrays.asList(new Student()).stream().collect(Collectors.groupingBy(s-> s.getDepartment(),
+                Collectors.mapping(s -> s.getRollNo(), Collectors.toList())));
+
+
+Thread Life Cycle
+
+
+new -> thread.start() {Runnable} -> Thread.run() {running}  -> wait/sleep/join/shutdow (Waiting, suspended, blocked) -> notify {runnable -> running}
+-> Teminated
+
+Hand on more on thread 
+
+Threaddump
+ jStack(lib) (snapshot for all thread with state and other details)
+
+
+classloader need to read  =====> bootstrap (jdk/jre.lib) (check if class already loaded if yes execute) > extention(jdk/jre/ext) > application (clasthpath)
+
+
+jenkins Pipeline
+
+Pull code from git
+Compile using maven
+test using mvn
+code quality check (Sonarqube)
+code build (maven)
+docker (create image, push image, deploy)
+
+
+
+
+jacococ (maven plugin)
+generate coverrage report
+run sonar scanner 
+
+`chitti`
+
+
+
+
+
+Stack vs Heap
+
+The stack in Java is used to store local variables and control flow information related to method calls.
+The heap in Java is used for dynamic memory allocation and stores objects created at runtime.
+
+
+class Test
+{
+   int a = 10;
+   static b = 11;
+  
+  static {
+
+	}
+
+ instance {
+}
+ 
+ constructor{}
+
+ method	{
+
+}
+
+ static method
+  inner class {
+}
+  
+
+
+
+
+Object class
+
+//why these 3 in Object but not in Thread
+Wait()
+Wait(milisecond)
+wait(milisecond, nanosecond)
+Notify()
+NotifyAll
+
+clone -- shallow copy (default Depentent object are not newly created but only refrence is created ), deep copy (Customize clone method and create instance of depent object and do deep copy)()
+getClass
+finalize
+
+
+toString
+equals
+hashcode
+
+
+
+final/finally/finalize
+
+method overrding
+
+signature same
+access modifier - child shoud not more restrictive than parent. (Parent (private) ---> child cant be public)
+return type -  should be same or sub class of super ex- Super(Number) - Child(Integer) (super ----> sub class)
+
+
+
+Exception
+
+Super not throwing exception - Child can throw only Unchecked Ex
+
+Super throwing exception - no ex, super ex or sub-class ex
+
+
+Thread/Runnable/Callable
+
+
+Executor with Runnable/callable
+
+
+
+
+Future Object
+
+
+Existing functional Interface
+
+Runnable -> void run
+Callable -> T call
+Comprator
+
+
+Predicate boolean test();  filter
+function R apply(T)  (x) -> X   map
+Supplier R get(); orElseGet String  s =names.stream().filter(a-> a.startsWith("d")).findAny().orElseGet(() -> "NOT FOUND");
+Consumer void accept(T); forEach 
+
+
+sub devision of heap memory
+
+
+t1		t2
+m1{
+m2
+}    ------    m2 
+		{
+}
+
+
+
+JPA
+
+
+
+Sync
+
+Security
+
+
+
+
+
+
+=================  Spring security + Jwt  ==============================
+
+/public
+/admin
+/user
+
+
+user password access /admin
+user password /user
+
+//JWT
+
+user password /authenticate  -> jwt token
+
+jwt token(header) /admin 
+
+Steps to confiue jwt with spring security
+
+1. add security and jjwt lib
+2. Confugure jpa and spring security
+   2.1. Authentication
+     2.1.1. UserDetails  -> UserDetailService (Spring class) -> override loadByUserName - > UserDetails by using spring User (Spring) -> User(getfromDb and set in this object)
+   2.2 passsword encoder	
+
+2. create jwtUtil class 
+    generateToken()
+    validate token
+    extractUserName()  token
+
+
+3. /authenticate Request(username, password)
+   authenicate using user name password using authenticationManager
+	if successs generateToken(userName)
+  return token
+
+
+
+
+4. permitall for /authenticate using configure(HttpSecurity)
+	set customFilter in httpSecurity to intercept request and do filtering (doFilterInternal)
+
+ 
+request >---------filter (intercept)-------------->     web
+
+
+
+5. Intercept request on filter level (validate if name in token and name in db are same (validate token))
+
+class OncePerRequestFilter
+     I(doFilterInternal) {
+    	1. get token value;
+	2. userName =  extractUserName(token)
+	3. user(db) = findByUsername(userName)
+	4. validateToken(token , user)
+	5. Set authentication securityContent
+	6. filterChain.doFilter(httpServletRequest, httpServletResponse);
+	}
+
+=========================================================================================================================
+
+Rate limitor (client side)
+
+limit no request/specified time
+
+ressilnce4J
+actuator
+aop
+
+while clling api
+
+@RateLimitor(name = "payment-service", fallbackMethod)
+  method 
+
+ {
+call api
+}
+
+fallbackMethod) {
+}
+
+
+1. health end expose
+2. resillence4j -> rate-limitor -> instances -> payment-service 
+
+{
+    no of request
+    specified time
+    wait time
+}
+
+
+
+===============
+Curcuit Breaker
+
+Service A --> Service B
+
+provide fallbackmethod if service B is down or calling method getting any exception/failure.
+
+State
+																					     /if call success --> Close state	
+closed(default)  >------if number of request cross thresold limit ---> Open >----------cross waiting duration----> Half Open >---cross no of allowed call in open state --> / 
+																					    \	
+																					     \if failure -->  open state		
+
+buffer call 10 -  total no of call it can store ()
+thresold 50%   -  if failure more than 5 request
+
+
+Steps to implement
+==================
+
+1. add dependancy for 
+	aop
+	resillence4J
+	actuator
+
+@CircuitBreaker(name ="payment-service", fallbackmethod = "fallbackMethod")`
+
+thresold %
+beffer capacity
+minimum no of call
+waiting time for open
+max no of allowed call in half open 
+
+=================
+
+Rest Api standards
+
+1. Use HTTP Methods Appropriately:
+2. Use Descriptive URIs:
+3. Versioning: hand on
+4. Request and Response Formats: hands on
+5. Use Plural Nouns for Resource Names:
+6. HTTP Status Codes: remember status code
+7. Pagination: Implement pagination for large result sets using query parameters (e.g., ?page=1&size=10). (hand's on)
+8. Query Parameters:Use query parameters for filtering, sorting, and customizing responses. Hands on
+9.  SSL/TLS: (https)(http Secure) - hyper text transfer protocol secure (encript request data based on ) - hands on
+10. Error Handling:Provide informative and consistent error messages in the response. Include error codes, descriptions, and relevant information for debugging.
+11. Content Negotiation:Allow multiple format like json/xml
+12. Documentation - swagger
+13. rate limiting
+14. testing 
+15. logging
+16. cors
+17. monitoring
+18. Alert
+
+
+
+join vs yeild hand's on
+
+
+
+
+
+
+anylize all entity and relationship
+decompose functionality
+choose all tech which is suitable
+mvc
+define entities
+define all dto fro all request-response
+@Reqest mapping
+versioning 
+CORS enable
+URI name noun
+uri name self declaretive
+singular/plural
+don;t use noun
+filtering/sorting/pagaination
+Validation @Valid @DTO @NoNull @Email @Positive @Future @Past Max Min
+Exception handling ControllerAdvise @ExceptionHandler
+Custom Exception class extending Runtime ex
+put code in try catch and catch with Exception and catch in Exception handler
+provide proper error response wih error code
+json/xml support
+static data (Caching)
+Spring Security 
+JWT
+Load Balance
+Curcit breaker
+Rate limiter
+Retry pattern
+Https
+Scaliblity
+@Async for email or for non returning task
+2nd level chaching
+api gateway
+automated test (junit)
+logging
+monitoring
+alert
+
+
+Aspect Programming
+
+@Aspect
+@Component
+Aspect class{
+
+Logger logger = LoggerFactory.getLogger(Aspect.class);
+
+
+@Before("execution(* pkg name.*.* (..))")  -------> Point Cut
+@Around
+@AfterReturn
+
+method(JoinPoint) {
+
+String className = joiPont.getSignature().getDeclaringTypeName();
+String method name = joinPont.getSignature().getName();
+[]Object args = joinPoint.getArgs();
+
+logger.INFO("class name {}, method name {}, args", className, methodName, args);
+
+}
+
+
+}
+
+
+
+
+
+
+
+entity
+
+
+Doctor {
+
+id
+name
+spceiality
+
+
+
+}
+
+
+
+Avilibility{
+
+
+
+}
+
+
+input : speciality
+out : 
+
+
+
+arry[] arr = ne arr[24]
+
+Object (time , List(Doctor))
+
+
+
+
+DATA JPA
+=============
+
+Composite key (primary key using multiple field)
+
+
+1. Use @Id on multiple required fields
+2. Create a custom class having all field which got annotated with @Id and override Hashcode Equals method and implement Serializable 
+3. Use @IdClass(Customclass.class) with @Entity 
+
+
+====Self Join=====
+
+Employee
+
+id Name managerId
+1 Subhash 4
+2 Arnab  1
+3 Chitii 1
+4 ajay 2
+
+
+id Name managerId
+1 Subhash 4
+2 Arnab  1
+3 Chitii 1
+4 ajay 2
+
+
+EmployeeName  ManagerName
+==================
+employeName managerName employee e join employee m e.manager_id = m.id;
+
+
+
+value = "select e.id as employeeId, e.name as employeeName, m.name as managerName from employee e left join employee m on e.id = m.manager_id", 
+
+
+
+Book -> boodId
+
+
+employee colomns, bookId 
+
+
+
+ subhash kumar -> Java 17 book
+
+
+
+
+
+Employee
+session
+transaction
+
+begin transaction
+
+repo.save(employee) -> persist
+
+(employee.setName(arnab))
+
+
+transient (after object creation) --> save, saveAndUpdate(persistent) --> hibernate(evict), JPA(EntityManager.detach())  ==DETACHED state ----->   (repo.remove) removed
+
+detach --> entityManager.merge--> persistant
+
+
+@Component, @Controller, @Service, @Repositoty
+
+
+
+Second level caching
+======================
+
+
+1st level caching - within session
+
+
+2nd level caching - across multiple session
+
+
+when 2nd level caching disabled
+
+1st level caching session1 - session1.laod(123) - select query, session1.load(123) - chache, session2.load(123) - select query
+
+when 2nd level caching enabled
+ session1 - session1.laod(123) - select query, session1.load(123) - fetch from 1st level cache, session2.load(123) - fetch data from 2nd level cache
+
+ 
+
+
+
+
+ sknsecdeveloper
+
+Generics
+
+status code
+diamomd problem
+springboot2 vs Springboot3
+@Resource vs @Autowired
+
+NoClassDefFoundError or ClassNotFoundException. 
+Class loader hand's on
+join vs yeild hand's on
+
+Batch Schedular
+SOLID principle
+validation
+
+
+Proxy in Hibernate load() Method - return proxy object
+
+load ---> return object not found ex if not found, faster, use if sure that object exist in db
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+

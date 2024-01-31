@@ -1,0 +1,412 @@
+memory leak / out of memory
+how to resolve out of memory issue in java based application
+
+1. VisualVM tool to analyse and find object leaking 
+2. Increase heap size using xmx and xms
+3. close resouse properly
+
+
+3rd last value
+
+limit
+------
+
+select * from employee limit order by employeeId desc limit(2,1) 
+
+2 is to skip no of row
+1 no of row to select
+
+rank
+-----
+select * from (
+select *, rank() over(order by salary desc) as ranking from employee
+) as rank_salary where ranking = 3;
+
+
+2nd last
+----
+
+select max(salary) from employee where salany< (select salary from employee)
+
+
+
+Setter vs Constructor injection
+--------------
+Partial not possible in constructor
+if all property(dependent) availabe use Constructor, if partial property availabe use setter injection
+setter override constructor
+
+
+failfast Vs failSafe Iterator
+-----------------
+Fail fast --  ArrayList, Set, Map
+Fail Safe - CopyOnWriteArrayList, CopyOnWriteArraySet
+
+
+
+Throwable Ex
+|____ Exception - IoException, SqlException, ClassNotFoundException, RuntimeException( NullPointerException, Arthmetic exception, IndexOutOfBoundException)
+|
+|____ Error (stackoverflow, memory error)
+
+
+Access Modifier
+---------------
+
+public - same class, same pkg sub-class, same pkg non sub closs, diff pkg sub class, diff pk non sub class
+private - same class
+protected - same class, same pkg sub class, same pk non sub class, diff pk sub class
+default - same pkg( same class, same pkg sb class, same pkg non sub class)
+
+Profiling
+-------------
+application-dev.properties
+application-qa.properties
+
+
+@Configuration
+{
+
+@Value("$app.url")
+public String dbUrl;
+
+@Bean
+@Profile("dev")
+DataSource getDataSource(){
+
+}
+
+
+
+}
+
+Using -Dspring.profiles.active=prod in VM Arguments
+Use spring.profiles.active=prod in application.properties
+
+API GateWay
+-------------
+it's server which resides in front of backend services. 
+
+Feature
+.......
+
+Routing
+
+spring cloud gateway 
+		routes : 
+			id : route1Config
+			uri : localhost:808/api/v1/employee
+			predicate : /employee/
+			
+			
+Security need to enabled for microservices
+Load Balancer need to enable
+Monitor - 
+
+
+Immutable class
+---------------
+
+1. Keep class as final so child class can not be created.
+2. keep member as private so no direct access
+3. keep member as final
+
+
+
+Actuator
+----------
+
+default root/actuator/info
+
+management.endpoint.web.expose.include =*
+
+In spring boot3 need to authorize "/actuator" -> permitAll
+
+
+
+
+
+Sequential vs Parallel stream
+----------------------------
+
+1. Both are used for transaforming data to desired result from array and Collections
+2. Sequential uses single core with i thread to execute pipeline but Parallel stream uses and utilize multicore cpu with multiple thread. 
+3. outcome for parallel could be unordered
+4. Intermediate operation
+
+
+Intermediate vs Terminal
+----------------------
+
+Intermediate --> returns stream and can pipeline another task. Any number of intermediate operation
+Terminal --> stream to desired result but not stream . Only 1 terminal operation. (Count, max, min,   )
+
+
+
+ filter, map, limit, reduce, find, and match to customize
+
+
+Spring Security + Jwt
+------------------------
+1. Configure spring security (authentication + authorization)
+2. Authentication - AuthenticationManagerBuilder.UserDetailsService(myUserDetailService)
+3.MyUserDetailService implement UserDetailService (loadByUserName return ((convert to dbUser)Spring Security User ))
+4. /authenticate api return token from generateToken
+5. authorize /authenticate as permit all
+6. intercept all request using custom filter OncePerRequestFilter method doFilterInternal Pass this into authorize and apply 
+
+
+ producer                         cluster - broker - topic - partition		cosumer
+
+
+
+
+employees.sort(())
+
+
+
+Employee(){
+
+employeeId
+
+Book {
+
+bookdId}
+}
+
+OneToOne(Cascadetype = ALL)
+@JoinColoun(name = "bookId")
+
+Employee table 
+coloum bookId)
+
+
+
+
+OneToMany(targetEntity = Book.class, cascase all)
+@JoinColumn(value = FK_employeeId, reference = "employeeId")
+
+Book table 
+
+coloum = FK_employeeId
+
+
+Micro service
+---------------------
+
+Server --
+
+1. dependency
+2. @EnableEurekaServer
+3. euereka.client.register-with-erureka = false
+			fetch registry = false
+
+Client --
+1. depenency
+2. @EnableEurkeaClient
+3. appliation name
+4. euereka.client.register-with-erureka = false
+			fetch registry = false
+5. service url
+	Default-zone : eureka server url
+
+
+API Gateway
+--------------
+
+
+1. Routing sppring cloud api gateway - routes - 
+        id -
+	uri - localhost/api/v1/user/123
+
+	predicate /user/*	          
+
+2. Monitoring actuator/gateway/
+3. Security (spring security + jwt)
+4. Circuit Breaker - 
+5. Rate - limitor
+
+Log Tracing
+------------
+
+Spring Cloud Sleuth is used to generate and attach the trace id, span id to the logs
+Zepkin - show distributed log in one certralized dashboard
+
+(app name, trace id(unique per request), span id(unique within method), zepkin flag)
+
+spring cloud Config Server
+--------------------
+can centralize common perperties. 
+
+1. app name
+2. @EnableConfigServer
+3. git url
+4. dependency config server
+
+
+consumer
+---
+1. import config server url
+2. dependency config
+3. Access using @Value
+4. @RefreshScope @Componenent --> /actuator/refresh
+5. management.endpoints.web.expose.include = refresh
+
+
+
+
+Spring IOC Container
+----------------------
+1. Bean Factory - not support annotation - basic feafture - scope(Singleton, ProtoType)
+2. ApplicationContext () - support annotation - extra feature (Singlton, prototype, request, session, context)
+
+
+transaction prpagation
+-----------------------
+REQUIRED (Default) - use existing transaction if not there then create own txn.
+SUPPORTED - use exiting if not there, commit without txn.
+NOT SUPPOERED - does not use txn either exist or not.
+NEVER - not use txn, if exist then throw exception.
+MADATORY - alway use txn, if not exist then throw exception.  
+
+
+transaction isolation
+-----------------------
+REPEATABLE READ (default) - take snapshot at begining of transaction, so qeury alway give same result so called repeatable read.
+READ UNCOMMITED - Cause dirty read problem.
+READ COMMITED - Cause non repeatable read.
+
+
+T1 salary 30000
+T2 update 50000
+T1 salary 50000
+T1        50000
+T2 roll back
+T1        30000  
+
+
+T1 5
+T1 5
+T2 4
+T1 5
+T2 commit
+T1 4
+
+
+SAGA(distibuted transaction in Micro service)
+
+-- by using kafka , it compesate all previous txn 
+
+
+
+Marker
+---------
+Serialization
+
+
+Employee emp;
+ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream("subhash.txt"));
+obj.writeObject(emp);
+
+
+
+ObjectOutputStream obj1 = new ObjectOutputStream(new FileInputStream("subhash.txt"));
+(Employee) obj1.readObject()
+
+
+
+static final long serialVersionUid = 273728362738L; Why?
+
+
+
+Internal Working of HashMap
+--------------------------
+1. Array of bucket
+2. Each bucket consist of one or more node
+3. Hashcode, k, v, Node
+
+
+1. obj1  --> hashcode -> index value -> index 6 
+obje2 6 -> Equals
+
+
+get
+
+obj1 -> index 6
+
+
+()-> print()
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+ 	
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
