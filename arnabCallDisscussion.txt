@@ -479,43 +479,6 @@ logger.INFO("class name {}, method name {}, args", className, methodName, args);
 
 
 
-
-
-
-entity
-
-
-Doctor {
-
-id
-name
-spceiality
-
-
-
-}
-
-
-
-Avilibility{
-
-
-
-}
-
-
-input : speciality
-out : 
-
-
-
-arry[] arr = ne arr[24]
-
-Object (time , List(Doctor))
-
-
-
-
 DATA JPA
 =============
 
@@ -618,12 +581,21 @@ status code
 diamomd problem
 springboot2 vs Springboot3
 @Resource vs @Autowired
+---------------
+
 
 NoClassDefFoundError or ClassNotFoundException. 
 Class loader hand's on
 join vs yeild hand's on
 
 Batch Schedular
+-------------
+@EnableScheduling with @Configuration
+
+@Scheduled(fixedRate = 1000) on method returning void
+
+
+
 SOLID principle
 validation
 
@@ -631,123 +603,6 @@ validation
 Proxy in Hibernate load() Method - return proxy object
 
 load ---> return object not found ex if not found, faster, use if sure that object exist in db
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
  
 

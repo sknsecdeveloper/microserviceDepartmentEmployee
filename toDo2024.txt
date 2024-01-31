@@ -338,6 +338,212 @@ obj1 -> index 6
 ()-> print()
 
 
+@Resource vs @Autowired
+---------------
+@Resource ----> Dependency injection priority by name, by type, by qualifier (jsr-250 annotation)
+@Autowire ----> Dependency injection priority by type, by qualifier, by name( Spring annotation)
+
+
+
+springboot2 vs Springboot3
+----------------------------
+Minimum spring boot version which require JAVA17 - 2.5
+Minimum spring version which require JAVA17 - 5.3
+Security - actuator end point are also secured with Spring security if enabling spring boot security.
+
+
+diamomd problem
+--------------------
+
+class Parent1 {
+
+test(){
+}
+
+}
+class Parent2 {
+
+test(){
+}
+
+}
+
+class DriverTest{
+
+psvm(){
+
+DriverTest driverTest = new DriverTest();
+driverTest.test(); // Java will confuse which test method to call and will give error
+
+
+}
+
+}
+
+
+
+Parent parent = new Child(); // valid
+Child child = new Parent(); //Invalid (incompatible types)
+
+
+
+Http Status Code
+-----------------
+-----------------
+
+Success Code
+------------
+200 - Ok (sget data)
+201 - Created (save data - POST)
+202 - Accepted (ex - upload file for processing)
+
+
+Client error code
+--------------
+400 bad request
+401 unauthorize (authorization failure)
+403 forbidden (authentication failure)
+404 not found
+405 method not allowed (http method missmatch)
+429 Too many request (ex - Rate limitor)
+
+
+Server side 
+----------
+500 Internal server error
+503 servive unavailable
+
+
+Batch Schedular
+-------------
+@EnableScheduling with @Configuration
+
+@Scheduled(fixedRate = 1000) on method returning void
+
+
+
+Second level caching (Hibernate)
+======================
+1. Dependency (Hibernate + EhCache)
+2. Enable Cache (congif file or property file)
+3. Region Factory class - EhCacheRegionFactory
+4. @Cachable with @Entity
+
+
+
+Impact by Replacing @Repository with @Component
+------------------
+
+1. @Repository transtate database related exception to Spring exception. So logs will be impacted.
+
+
+Self Join
+----------
+employeeId, Name, ManagerId
+
+
+get -> id, name , managerName
+
+select * from employee as emp join employee as mgr on emp.managerId= mgr.employeeId;
+
+
+
+Composite Key
+---------------
+
+@EmbededClass(EMployeeIdEmail.class)
+Employee {
+@Id
+id,
+@Id
+email,
+name
+
+}
+
+EMployeeIdEmail implement Serializable {
+
+id,
+email
+
+override
+Hashcode
+equals
+}
+
+Employee {
+
+@EmbededId
+EMployeeIdEmail
+name
+
+}
+
+
+@Embedable
+EmployeeIdEmail implement Serializable {
+
+id,
+email
+
+override
+Hashcode
+equals
+}
+
+
+Standard for API designing
+---------------------------
+1. Use noun for entity in URI, proper versioning
+2. Entity or Actual deta inside app should isolated using Dto
+3. Proper respose, status code
+4. pagination
+5. data filtering using request param
+6. cache
+7. Thread pool for async task
+8. Logger
+9. Validation on api inputs, Test
+10. Follow SOLID principle and clean coding standard (sonar)
+11. Rest Client load balancer
+12. API gateway
+13. Fault tolletance (Circuit breaker)
+14. Security (https, spring security with jwt, auth2, cloud based user management, CORS)
+15. Rate limitor, scalabe, 2nd level cache, Db indexing, kafka, db partition
+16. config server (centralize/externalize config)
+17. Automated test, build and deployment
+18. Log monitor and set alert
+19. Documentation
+
+
+
+Swagger2
+---------
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
 
 
 

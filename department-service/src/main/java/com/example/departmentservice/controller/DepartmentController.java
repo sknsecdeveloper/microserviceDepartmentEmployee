@@ -20,8 +20,8 @@ public class DepartmentController {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    @Autowired
-    private EmployeeClient employeeClient;
+    /*@Autowired
+    private EmployeeClient employeeClient;*/
 
     @PostMapping
     public Department addDepartment(@RequestBody Department department) {
