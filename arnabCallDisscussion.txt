@@ -597,7 +597,7 @@ Batch Schedular
 
 
 SOLID principle
-validation
+validation 
 
 
 Proxy in Hibernate load() Method - return proxy object

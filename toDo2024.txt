@@ -520,6 +520,69 @@ Swagger2
 ---------
 
 
+SOLID principle
+---------------------
+
+Single Responsibility -- every java class should have single responsibility.
+
+
+Open-Close For new requirement module should be open for extenstion but close for modification.
+
+
+class Sqare {
+
+double hight;
+
+int area() {
+
+   return hight*hight	
+}
+
+}
+
+CompareAreaService {
+
+double compareArea(Sqare a, Sqare b) {
+
+return a.area() - b.area();
+
+}
+
+}
+
+
+Problem - We have Compare area service, now imangine if area needs to compared for circle, triangle etc. For each we need to write compareArea method so
+code will be meshed up.
+
+
+
+Solution - Instead of passing Square instant we can pass Shape(Interface) instance and implement shape instace for each shape (circle, triangle).
+
+
+
+
+
+interface Shape{
+
+double area();
+
+}
+
+
+Liskov Substitution -- Base class should be subtitutable for it's base class. (should have interface for common method and seperate interafce for indivual functionality)
+
+
+Interface segregation - should not force implementing client to implement method which is not relevant.
+
+
+Dependency Inversion - We should use abstraction (Interface and abstract class) instead of concrete implementation. 
+
+ 
+
+
+
+
+
 
 
 
