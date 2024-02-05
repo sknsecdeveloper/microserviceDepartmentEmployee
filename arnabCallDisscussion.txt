@@ -78,6 +78,8 @@ public boolean importEmployees(List<Employee> data) { ... }
         userProfileRepository.updateUserProfile(userId, updatedProfile);
     }
 
+@CachePut --- Remove from Cache
+
 
 @CacheConfig(cacheNames={"employees"})
 public class EmployeeService { ------------- provide value and cache name for method insie a class
@@ -406,6 +408,9 @@ Rest Api standards
 
 
 join vs yeild hand's on
+
+Join - Put current running thread on waiting state untill thread on which it's applied is terminated.
+Yeild - Pause current thread and allow other thread to execute. Hint thread scheduler that this thread is willing to yelid CPU it's using.
 
 
 

@@ -295,7 +295,7 @@ T1 4
 
 SAGA(distibuted transaction in Micro service)
 
--- by using kafka , it compesate all previous txn 
+-- by using kafka , it compesate all previous txn (Cho)
 
 
 
@@ -576,6 +576,123 @@ Interface segregation - should not force implementing client to implement method
 
 
 Dependency Inversion - We should use abstraction (Interface and abstract class) instead of concrete implementation. 
+
+
+
+GroupingBY
+
+
+int[]  arr = {1,1,1,2,2,3,2};
+
+Arrays.stream(arr).boxed().collect(Collector.groupingBy(n->n))
+
+Map<Integer, List<Integer>> =
+
+
+chat[] charArr = {a,b,c,b,b,a,n,e};
+charArr.chars().
+
+
+
+mvn
+---------
+libA1      libB3
+|	    |	
+libX1.5	  libx2 	
+
+
+
+java 8
+=============
+1. Default method in interface
+2. static method in interface
+
+3. function interface and labda exp
+
+java8 FI
+-----
+a. Predicate -> boolean test(T) - filter
+b. Function -> T1 apply(T2) - map
+b. Supplier -> T get(); -- OptionaObject.orElseGet()
+d. Consumer -> void accept(T) --- forEach
+
+
+Stream -  sequence of elements
+---------
+reduce
+map
+flatMap
+filter
+mapToObj
+boxed
+sorted
+findFirst
+findAny
+distinct
+count
+
+Method Referece
+
+1. static method 
+2. Custome class instance method
+3. Arbiroty object method
+4. Constructor
+
+
+Optional
+-------------
+1.Exception if use get on Empty Optional.
+2. Null check isPresent
+2.1 Optional.OfNullable(var) ->  if var value is null, it will create Empty Optional 
+
+
+
+
+Date time api
+------------
+
+LocalDate
+LocalTime
+LocalDateTime
+
+
+DateTimeFormatter
+
+Java 7 java 8 Date difference
+-----------
+
+1. Thread safety
+2. Mutublity
+3. 7 - month start with 0, day start with 1
+4. TimeZone
+5. 7 - only  Date class, 8 - LocalDate, LocalTime, LocalDateTime, ZonedDateTime
+
+
+format date to ddMMyyyy (MM should be always capital)
+------
+DateTimeFOrmatter.ofPattern(ddMMyyyy).format(LocalDate.now);
+
+convert "31.07.2016" ddMMyyyy to LocalDate
+-------------
+
+LocalDate.parse("31.07.2016", DateTimeFormatter.ofPattern(ddMMyyyy))
+
+
+
+
+java7 (PermGen (fixed size)) -> Java 8 (MetaSpace (Not fixed size))
+
+
+
+Class Loader
+===================
+
+1. Delegation - request delegate from parent class loader to child cloass loader
+2. Class loaded by parent are visibale to child class and can not reload.  loader but not vice-versa
+
+
+
+
 
  
 
