@@ -692,6 +692,49 @@ Class Loader
 
 
 
+How to deploy spring boot on aws eks(Elastic kubernetes service)
+------------------------
+
+1. Create docker file
+
+FROM openjdk:17
+ADD target/JPAdemo.jar JPAdemo.jar
+expose 8080
+ENTRYPOINT ["java", "-jar","JPAdemo.jar"]
+
+
+
+docker command to create docker image
+----
+docker build -t jpademo .
+
+
+2. Push docker image to ECR(Elastic container registry just like docker hub (amazon specific))
+
+
+
+
+
+Connect to multiple database Springboot using JPA
+================================================
+1. dependency for both db (driver)
+2. datasource proprties for both db using diffrent prefix
+3. Read datasource config from properties file using DataSourceProperties using @Bean and @ConfigurationProperties
+4. Create bean of data source for both using DataSourceProperties bean for both DataSourceProperties.initializeDataSourceBuilder.build();
+5. Entiry Manager using EntityManagerFactoryBuilder @Bean for both database
+6. Platform Transaction manager for both db using new JpaTransactionManger(EntityManagerFactory)
+7. @EnableJpaRepositories EmployeeDatasourceConfiguration  and OrderDatasourceConfiguration  and set (entityManager, transactionManager, package)
+
+
+
+
+
+
+
+
+
+
+
 
 
  
